@@ -1,12 +1,13 @@
 import React from "react";
 import { handleMovieSearch, addMovieToList } from "../actions";
+import {StoreContext} from '../index'
 
 class Navbar extends React.Component {
   state = {
     showSearchResults: false,
     searchText: "",
   };
-  
+
   handleAddToMovies = (movie) => {
     this.props.dispatch(addMovieToList(movie));
     this.setState({
@@ -53,4 +54,14 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+class NavbarWrapper extends React.Component {
+    render(){
+        return(
+            <StoreContext.Consumer>
+        {(store)=><Navbar dispatch={store.dispatch} search={this.props.search}/>}
+            </StoreContext.Consumer>
+        )
+    }
+}
+
+export default NavbarWrapper;
